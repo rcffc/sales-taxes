@@ -5,4 +5,9 @@ public class MiscProduct extends Product{
         super(aPrice, aImported);
         this.exemptedFromBasicSalesTax = false;
     }
+
+    MiscProduct(double aPrice, boolean aImported, String aDescription) {
+        super(aPrice, aImported, aDescription);
+        this.exemptedFromBasicSalesTax = false;
+    }
 }

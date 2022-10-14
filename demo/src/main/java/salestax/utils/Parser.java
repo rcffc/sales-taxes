@@ -13,17 +13,18 @@ public class Parser {
     public Product parse(String input) {
         String[] splitResult = input.split(" at ");
         boolean imported = splitResult[0].contains("imported");
+        String description = splitResult[0];
 
         ProductFactory factory;
-        if (splitResult[0].contains("book")){
+        if (description.contains("book")){
             factory = new BookProductFactory();
-        } else if (splitResult[0].contains("chocolate")){
+        } else if (description.contains("chocolate")){
             factory = new FoodProductFactory();
-        } else if (splitResult[0].contains("pills")) {
+        } else if (description.contains("pills")) {
             factory = new MedicineProductFactory();
         } else {
             factory = new MiscProductFactory();
         }
-        return factory.makeProduct(Double.parseDouble(splitResult[1]), imported);
+        return factory.makeProduct(Double.parseDouble(splitResult[1]), imported, description);
     }   
 }

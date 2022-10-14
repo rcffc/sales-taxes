@@ -5,4 +5,9 @@ public class MedicineProduct extends Product{
         super(aPrice, aImported);
         this.exemptedFromBasicSalesTax = true;
     }
+
+    MedicineProduct(double aPrice, boolean aImported, String aDescription) {
+        super(aPrice, aImported, aDescription);
+        this.exemptedFromBasicSalesTax = true;
+    }
 }

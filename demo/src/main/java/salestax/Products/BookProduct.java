@@ -5,4 +5,11 @@ public class BookProduct extends Product{
         super(aPrice, aImported);
         this.exemptedFromBasicSalesTax = true;
     }
+    
+    BookProduct(double aPrice, boolean aImported, String aDescription) {
+        super(aPrice, aImported, aDescription);
+        this.exemptedFromBasicSalesTax = true;
+        this.setDescription(aDescription);
+    }
+    
 }
