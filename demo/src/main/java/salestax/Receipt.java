@@ -1,6 +1,8 @@
 package salestax;
 
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import salestax.Products.Product;
 import salestax.Tax.ITaxStrategy;
@@ -10,6 +12,7 @@ public class Receipt {
     
     private double totalTax;
     private double totalCostAfterTax;
+    private List<String> output;
 
     private Collection<Product> products;
     private ITaxStrategy strategy = new TaxStrategy();
@@ -35,6 +38,14 @@ public class Receipt {
         this.totalCostAfterTax = aTotalCostAfterTax;
     }
 
+    public List<String> getOutput() {
+        return output;
+    }
+
+    public void setOutput(List<String> output) {
+        this.output = output;
+    }
+
     public Collection<Product> getProducts() {
         return products;
     }
@@ -43,15 +54,27 @@ public class Receipt {
         this.products = aProducts;
     }
 
-    public void calculateCostsAndPrintReceipt() {
+    /**
+     * Calculate final price for each product as well as total tax and total cost of purchase
+     * 
+     * @return The lines to be printed on the receipt
+     */
+    public List<String> calculateCosts() {
+        List<String> result = new LinkedList<String>();
         for (Product product : products) {
             double productTax = strategy.calculateTax(product);
             double productPlusTax = product.getPrice() + productTax;
-            System.out.println(product.getDescription() + ": " + productPlusTax);
+            result.add(product.getDescription() + ": " + productPlusTax);
             totalTax += productTax;
             totalCostAfterTax += productPlusTax;
         }
-        System.out.println("Sales Taxes: " + totalTax);
-        System.out.println("Total: " + totalCostAfterTax);       
+        this.output = result;
+        return result;
+    }
+    
+    public void printReceipt() {
+        for (String line: output) {
+            System.out.println(line);
+        }
     }
 }
