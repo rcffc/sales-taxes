@@ -1,8 +1,11 @@
 package salestax;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import salestax.Products.Product;
 import salestax.Tax.ITaxStrategy;
@@ -16,10 +19,12 @@ public class Receipt {
 
     private Collection<Product> products;
     private ITaxStrategy strategy = new TaxStrategy();
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public Receipt() {
         this.totalTax = 0;
         this.totalCostAfterTax = 0;
+        df.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ENGLISH));
     }
 
     public double getTotalTax() {
@@ -64,10 +69,12 @@ public class Receipt {
         for (Product product : products) {
             double productTax = strategy.calculateTax(product);
             double productPlusTax = product.getPrice() + productTax;
-            result.add(product.getDescription() + ": " + productPlusTax);
+            result.add(product.getDescription() + ": " + df.format(productPlusTax));
             totalTax += productTax;
             totalCostAfterTax += productPlusTax;
         }
+        result.add("Sales Taxes: " + df.format(totalTax));
+        result.add("Total: " + df.format(totalCostAfterTax));
         this.output = result;
         return result;
     }
