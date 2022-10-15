@@ -60,4 +60,11 @@ public class ParserTest {
         Product chocoImported2 = new FoodProductFactory().makeProduct(11.25, true, "1 imported box of chocolates");
         assertEquals(parser.parse(input3[3]), chocoImported2);
     }
+
+    @Test
+    public void testParseDescription() {
+        String expected = "1 imported box of chocolates"; 
+        String input = "1 box of imported chocolates";
+        assertEquals(expected, parser.parseDescription(input, input.indexOf("imported")));
+    }
 }
